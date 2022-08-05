@@ -1,0 +1,3 @@
+luci-app-ssr-plus
+luci-app-wolplus
+luci-app-vlmcsd
