@@ -12,7 +12,7 @@ on:
       useCache:
         description: 'Use cCache'
         required: false
-        default: 'true'
+        default: 'false'
       UPLOAD_BIN_DIR:
         description: 'Upload Bin Driectory'
         required: false
