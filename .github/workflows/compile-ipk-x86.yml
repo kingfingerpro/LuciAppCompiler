@@ -124,8 +124,7 @@ jobs:
       if: env.UPLOAD_IPK == 'true' && !cancelled()
       run: |
         cd openwrt/bin/packages/*
-        tar -czf $GITHUB_WORKSPACE/openwrt/kiddin9.tar.gz kiddin9/
-        echo "IPK=$GITHUB_WORKSPACE/openwrt/kiddin9.tar.gz" >> $GITHUB_ENV
+        echo "IPK=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
     - name: Upload firmware directory
