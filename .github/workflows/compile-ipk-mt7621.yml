@@ -126,7 +126,7 @@ jobs:
       id: tag
       if: steps.compress.outputs.status == 'success' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::$DEVICE_NAME-$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")-$DEVICE_NAME"
         echo "::set-output name=status::success"
 
     - name: Upload IPK to release
