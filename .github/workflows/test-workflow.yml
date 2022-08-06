@@ -18,8 +18,11 @@ on:
       UPLOAD_RELEASE:
         description: 'Upload IPK to Release'
         required: true
-        type: boolean
-        default: 0
+        type: choice
+        options:
+        - true
+        - false
+        default: 'true'
 
 env:
   SDK_DLINK: https://downloads.openwrt.org/releases/21.02.3/targets/x86/64/openwrt-sdk-21.02.3-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz # 21.02.3 x86-64 SDK
