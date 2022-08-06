@@ -9,17 +9,17 @@ on:
         description: 'Upload Bin Driectory'
         required: true
         type: boolean
-        default: 1
+        default: true
       UPLOAD_IPK:
         description: 'Upload IPK'
         required: true
         type: boolean
-        default: 1
+        default: false
       UPLOAD_RELEASE:
         description: 'Upload IPK to Release'
         required: true
         type: boolean
-        default: 1
+        default: 0
 
 env:
   SDK_DLINK: https://downloads.openwrt.org/releases/21.02.3/targets/x86/64/openwrt-sdk-21.02.3-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz # 21.02.3 x86-64 SDK
@@ -37,7 +37,7 @@ jobs:
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
-      run: echo '1'
+      run: echo BIN${{ inputs.UPLOAD_BIN_DIR }} IPK${{ inputs.UPLOAD_IPK }} REL${{ inputs.UPLOAD_RELEASE }}
 
     - name: Download SDK
       run: echo '2'
