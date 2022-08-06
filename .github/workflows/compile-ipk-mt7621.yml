@@ -126,7 +126,7 @@ jobs:
       id: tag
       if: steps.compress.outputs.status == 'success' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::IPKs$DEVICE_NAME-$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=release_tag::IPKs-$(date +"%Y.%m.%d-%H%M")"
         echo "::set-output name=status::success"
 
     - name: Upload IPK to release
@@ -146,7 +146,7 @@ jobs:
 
     - name: Remove old Releases
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      uses: dev-drprasad/delete-older-releases@v0.1.0
+      uses: dev-drprasad/delete-older-releases@v0.2.0
       with:
         keep_latest: 6
         delete_tags: true
