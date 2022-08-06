@@ -2,7 +2,7 @@
 name: Test workflow
 
 on:
-  repository_dispatch:
+
   workflow_dispatch:
     inputs:
       UPLOAD_BIN_DIR:
