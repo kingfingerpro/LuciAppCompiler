@@ -110,7 +110,7 @@ jobs:
         path: openwrt/bin
 
     - name: Upload IPK directory
-      if: github.event.inputs.UPLOAD_IPK == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
+      if: steps.organize.outputs.status == 'success' && github.event.inputs.UPLOAD_IPK == 'true' && !cancelled()
       uses: actions/upload-artifact@main
       with:
         name: OpenWrt_IPK${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -127,7 +127,7 @@ jobs:
       id: tag
       if: steps.compress.outputs.status == 'success' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=release_tag::IPKs$DEVICE_NAME\-$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
         echo "::set-output name=status::success"
 
