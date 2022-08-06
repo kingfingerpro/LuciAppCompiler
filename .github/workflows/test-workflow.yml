@@ -109,5 +109,5 @@ jobs:
       run: echo '14'
 
     - name: Remove old Releases
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: github.event.inputs.UPLOAD_RELEASE == 'true' && !cancelled()
       run: echo '15'
