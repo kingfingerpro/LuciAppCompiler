@@ -59,7 +59,7 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD
-        wget $SDK_DLINK -O sdk.tar.xz && tar -Jxf sdk.tar.xz && mv openwrt-sdk-* openwrt
+        wget $SDK_DLINK -bO sdk.tar.xz && tar -Jxf sdk.tar.xz && mv openwrt-sdk-* openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Add custom feeds sources
