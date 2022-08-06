@@ -3,8 +3,6 @@ name: Compile IPK (X86/64)
 
 on:
   repository_dispatch:
-    inputs:
-      UPLOAD_RELEASE: true
   workflow_dispatch:
     inputs:
       UPLOAD_BIN_DIR:
