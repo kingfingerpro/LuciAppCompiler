@@ -1,5 +1,5 @@
 
-name: Compile IPK (X86/64)
+name: test
 
 on:
   repository_dispatch:
