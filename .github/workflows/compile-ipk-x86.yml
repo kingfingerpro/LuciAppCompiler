@@ -6,15 +6,15 @@ on:
   workflow_dispatch:
     inputs:
       UPLOAD_BIN_DIR:
-        description: 'Upload Bin Driectory'
+        description: 'Upload Bin Directory'
         type: boolean
         default: true
       UPLOAD_IPK:
-        description: 'Upload IPK'
+        description: 'Upload IPK Directory'
         type: boolean
         default: true
       UPLOAD_RELEASE:
-        description: 'Upload IPK to Release'
+        description: 'Upload IPKs.zip to Release'
         type: boolean
         default: true
 
