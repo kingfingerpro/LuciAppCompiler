@@ -96,8 +96,8 @@ jobs:
       run: df -hT
 
     - name: Upload bin directory
-      uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && github.event.inputs.UPLOAD_BIN_DIR == 'true'
+      uses: actions/upload-artifact@main
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
@@ -110,8 +110,8 @@ jobs:
         echo "::set-output name=status::success"
 
     - name: Upload IPK directory
-      uses: actions/upload-artifact@main
       if: github.event.inputs.UPLOAD_IPK == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
+      uses: actions/upload-artifact@main
       with:
         name: OpenWrt_IPK${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.IPK }}
@@ -132,14 +132,14 @@ jobs:
         echo "::set-output name=status::success"
 
     - name: Upload IPK to release
-      uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: ${{ env.IPK }}/packages.zip
+        files: ${{ env.IPK }}/packages${{ env.DEVICE_NAME }}.zip
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
@@ -148,8 +148,8 @@ jobs:
         keep_minimum_runs: 3
 
     - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      uses: dev-drprasad/delete-older-releases@v0.1.0
       with:
         keep_latest: 3
         delete_tags: true
