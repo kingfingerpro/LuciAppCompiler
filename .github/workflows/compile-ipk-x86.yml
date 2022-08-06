@@ -3,19 +3,33 @@ name: Compile IPK (X86/64)
 
 on:
   repository_dispatch:
+    inputs:
+      UPLOAD_RELEASE: true
   workflow_dispatch:
     inputs:
       UPLOAD_BIN_DIR:
         description: 'Upload Bin Driectory'
-        required: false
+        required: true
+        type: choice
+        options:
+        - true
+        - false
         default: 'true'
       UPLOAD_IPK:
         description: 'Upload IPK'
-        required: false
+        required: true
+        type: choice
+        options:
+        - true
+        - false
         default: 'true'
       UPLOAD_RELEASE:
         description: 'Upload IPK to Release'
-        required: false
+        required: true
+        type: choice
+        options:
+        - true
+        - false
         default: 'true'
 
 env:
@@ -92,7 +106,6 @@ jobs:
 
     - name: Organize files
       id: organize
-      if: github.event.inputs.UPLOAD_IPK == 'true' && !cancelled()
       run: |
         cd openwrt/bin/packages/*
         echo "IPK=$PWD" >> $GITHUB_ENV
@@ -100,7 +113,7 @@ jobs:
 
     - name: Upload IPK directory
       uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
+      if: github.event.inputs.UPLOAD_IPK == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_IPK${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.IPK }}
