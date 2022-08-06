@@ -107,7 +107,7 @@ jobs:
       id: compress
       if: github.event.inputs.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        zip -r packages.zip $IPK/*
+        zip -r $IPK/packages.zip $IPK/*
         echo "::set-output name=status::success"
 
     - name: Generate release tag
