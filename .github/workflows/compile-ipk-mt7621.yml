@@ -73,7 +73,7 @@ jobs:
         echo -e "$(nproc) thread compile"
         for line in $(cat $GITHUB_WORKSPACE/apps.txt);do make -j$(nproc) package/$line/compile || make -j1 package/$line/compile || make -j1 V=s package/$line/compile;done
         staging_dir/host/bin/usign -G -s key-build -p key-build.pub -c "Local Build Key"
-        make -j$(nproc) V=sc package/index
+        make -j$(nproc) package/index
         echo "::set-output name=status::success"
         echo $SDK_DLINK | sed -r 's/.*openwrt-sdk-(.*)_gcc.*/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
