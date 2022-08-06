@@ -49,7 +49,6 @@ jobs:
       run: echo '1'
 
     - name: Download SDK
-      working-directory: /workdir
       run: echo '2'
 
     - name: Add custom feeds sources
