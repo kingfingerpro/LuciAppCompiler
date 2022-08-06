@@ -8,27 +8,18 @@ on:
       UPLOAD_BIN_DIR:
         description: 'Upload Bin Driectory'
         required: true
-        type: choice
-        options:
-        - true
-        - false
-        default: 'true'
+        type: boolean
+        default: 1
       UPLOAD_IPK:
         description: 'Upload IPK'
         required: true
-        type: choice
-        options:
-        - true
-        - false
-        default: 'true'
+        type: boolean
+        default: 1
       UPLOAD_RELEASE:
         description: 'Upload IPK to Release'
         required: true
-        type: choice
-        options:
-        - true
-        - false
-        default: 'true'
+        type: boolean
+        default: 1
 
 env:
   SDK_DLINK: https://downloads.openwrt.org/releases/21.02.3/targets/x86/64/openwrt-sdk-21.02.3-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz # 21.02.3 x86-64 SDK
