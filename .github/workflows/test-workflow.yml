@@ -39,9 +39,9 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         echo inputBIN ${{ inputs.UPLOAD_BIN_DIR }} inputIPK ${{ inputs.UPLOAD_IPK_DIR }} inputREL ${{ inputs.UPLOAD_RELEASE }}
-        [ -e ${{ github.event.inputs.UPLOAD_BIN_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}" >> $GITHUB_ENV
-        [ -e ${{ github.event.inputs.UPLOAD_IPK_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_IPK_DIR }}" >> $GITHUB_ENV
-        [ -e ${{ github.event.inputs.UPLOAD_RELEASE }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_RELEASE }}" >> $GITHUB_ENV
+        [ -e ${{ github.event.inputs.UPLOAD_BIN_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}" >> $GITHUB_ENV && echo "done"
+        [ -e ${{ github.event.inputs.UPLOAD_IPK_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_IPK_DIR }}" >> $GITHUB_ENV && echo "done"
+        [ -e ${{ github.event.inputs.UPLOAD_RELEASE }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_RELEASE }}" >> $GITHUB_ENV && echo "done"
 
     - name: Download SDK
       run: echo '2'
