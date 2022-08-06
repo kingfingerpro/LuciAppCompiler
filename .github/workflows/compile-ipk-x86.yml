@@ -95,19 +95,19 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
-    - name: Upload bin directory
-      if: steps.compile.outputs.status == 'success' && github.event.inputs.UPLOAD_BIN_DIR == 'true'
-      uses: actions/upload-artifact@main
-      with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt/bin
-
     - name: Organize files
       id: organize
       run: |
         cd openwrt/bin/packages/*
         echo "IPK=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
+
+    - name: Upload bin directory
+      if: steps.compile.outputs.status == 'success' && github.event.inputs.UPLOAD_BIN_DIR == 'true'
+      uses: actions/upload-artifact@main
+      with:
+        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin
 
     - name: Upload IPK directory
       if: github.event.inputs.UPLOAD_IPK == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
