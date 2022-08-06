@@ -6,26 +6,23 @@ on:
   workflow_dispatch:
     inputs:
       UPLOAD_BIN_DIR:
-        description: 'Upload Bin Driectory'
+        description: 'Upload Bin Directory'
         type: boolean
         default: true
-      UPLOAD_IPK:
-        description: 'Upload IPK'
+      UPLOAD_IPK_DIR:
+        description: 'Upload IPK Directory'
         type: boolean
-        default: false
+        default: true
       UPLOAD_RELEASE:
-        description: 'Upload IPK to Release'
-        type: choice
-        options:
-        - true
-        - false
-        default: 'true'
+        description: 'Upload IPKs.zip to Release'
+        type: boolean
+        default: true
 
 env:
   SDK_DLINK: https://downloads.openwrt.org/releases/21.02.3/targets/x86/64/openwrt-sdk-21.02.3-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz # 21.02.3 x86-64 SDK
   ADD_SRC: addfeedsrc.sh
   UPLOAD_BIN_DIR: false
-  UPLOAD_IPK: false
+  UPLOAD_IPK_DIR: false
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
@@ -41,7 +38,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        echo inputBIN ${{ inputs.UPLOAD_BIN_DIR }} inputIPK ${{ inputs.UPLOAD_IPK }} inputREL ${{ inputs.UPLOAD_RELEASE }}
+        echo inputBIN ${{ inputs.UPLOAD_BIN_DIR }} inputIPK ${{ inputs.UPLOAD_IPK_DIR }} inputREL ${{ inputs.UPLOAD_RELEASE }}
         [ -e ${{ github.event.inputs.UPLOAD_BIN_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}" >> $GITHUB_ENV
 
     - name: Download SDK
@@ -80,7 +77,7 @@ jobs:
       run: echo '8'
 
     - name: Upload IPK directory
-      if: env.UPLOAD_IPK == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
+      if: env.UPLOAD_IPK_DIR == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       run: echo '10'
 
     - name: Compress releasing files
