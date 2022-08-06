@@ -37,7 +37,7 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync zip
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -73,7 +73,7 @@ jobs:
         echo -e "$(nproc) thread compile"
         for line in $(cat $GITHUB_WORKSPACE/apps.txt);do make -j$(nproc) package/$line/compile || make -j1 package/$line/compile || make -j1 V=s package/$line/compile;done
         echo "::set-output name=status::success"
-        echo $SDK_DLINK | sed -r 's/.*openwrt-sdk(.*)_gcc.*/\1/' > DEVICE_NAME
+        echo $SDK_DLINK | sed -r 's/.*openwrt-sdk-(.*)_gcc.*/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
@@ -96,16 +96,23 @@ jobs:
         echo "IPK=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    - name: Upload firmware directory
+    - name: Upload IPK directory
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_IPK${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        files: ${{ env.IPK }}
+        path: ${{ env.IPK }}
+
+    - name: Compress releasing files
+      id: compress
+      if: github.event.inputs.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        zip -r packages.zip $IPK/*
+        echo "::set-output name=status::success"
 
     - name: Generate release tag
       id: tag
-      if: github.event.inputs.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: steps.compress.outputs.status == 'success' && !cancelled()
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
@@ -119,7 +126,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: ${{ env.IPK }}
+        files: ${{ env.IPK }}/packages.zip
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
