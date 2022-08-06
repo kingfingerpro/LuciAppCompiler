@@ -42,6 +42,7 @@ jobs:
         [ ${{ github.event.inputs.UPLOAD_BIN_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}" >> $GITHUB_ENV && echo "done"
         [ ${{ github.event.inputs.UPLOAD_IPK_DIR }} ] && echo "UPLOAD_IPK_DIR=${{ github.event.inputs.UPLOAD_IPK_DIR }}" >> $GITHUB_ENV && echo "done"
         [ ${{ github.event.inputs.UPLOAD_RELEASE }} ] && echo "UPLOAD_RELEASE=${{ github.event.inputs.UPLOAD_RELEASE }}" >> $GITHUB_ENV && echo "done"
+        echo "done"
 
     - name: Download SDK
       run: echo '2'
