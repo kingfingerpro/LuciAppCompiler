@@ -1,2 +1,4 @@
 luci-app-wolplus
 luci-app-vlmcsd
+luci-app-ssr-plus
+luci-app-wrtbwmon
