@@ -126,7 +126,7 @@ jobs:
       id: tag
       if: steps.compress.outputs.status == 'success' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::IPKs$DEVICE_NAME\-$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=release_tag::IPKs$DEVICE_NAME-$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
         echo "::set-output name=status::success"
 
