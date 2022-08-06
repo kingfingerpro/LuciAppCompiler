@@ -7,28 +7,16 @@ on:
     inputs:
       UPLOAD_BIN_DIR:
         description: 'Upload Bin Driectory'
-        required: true
-        type: choice
-        options:
-        - true
-        - false
-        default: 'true'
+        type: boolean
+        default: true
       UPLOAD_IPK:
         description: 'Upload IPK'
-        required: true
-        type: choice
-        options:
-        - true
-        - false
-        default: 'true'
+        type: boolean
+        default: true
       UPLOAD_RELEASE:
         description: 'Upload IPK to Release'
-        required: true
-        type: choice
-        options:
-        - true
-        - false
-        default: 'true'
+        type: boolean
+        default: true
 
 env:
   SDK_DLINK: https://downloads.openwrt.org/releases/21.02.3/targets/ramips/mt7621/openwrt-sdk-21.02.3-ramips-mt7621_gcc-8.4.0_musl.Linux-x86_64.tar.xz # 21.02.3 MT7621 SDK

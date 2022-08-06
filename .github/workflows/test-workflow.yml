@@ -7,17 +7,14 @@ on:
     inputs:
       UPLOAD_BIN_DIR:
         description: 'Upload Bin Driectory'
-        required: true
         type: boolean
         default: true
       UPLOAD_IPK:
         description: 'Upload IPK'
-        required: true
         type: boolean
         default: false
       UPLOAD_RELEASE:
         description: 'Upload IPK to Release'
-        required: true
         type: choice
         options:
         - true
