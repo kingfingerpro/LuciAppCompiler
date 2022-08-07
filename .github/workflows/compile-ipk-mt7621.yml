@@ -16,11 +16,12 @@ on:
       UPLOAD_RELEASE:
         description: 'Upload IPKs.zip to Release'
         type: boolean
-        default: true
+        default: false
 
 env:
   SDK_DLINK: https://downloads.openwrt.org/releases/21.02.3/targets/ramips/mt7621/openwrt-sdk-21.02.3-ramips-mt7621_gcc-8.4.0_musl.Linux-x86_64.tar.xz # 21.02.3 MT7621 SDK
   ADD_SRC: addfeedsrc.sh
+  APP_LST: apps.txt
   UPLOAD_BIN_DIR: false
   UPLOAD_IPK_DIR: false
   UPLOAD_RELEASE: true
@@ -80,9 +81,10 @@ jobs:
     - name: Compile IPK
       id: compile
       run: |
+        echo "curl" >> $APP_LST
         cd openwrt
         echo -e "$(nproc) thread compile"
-        for line in $(cat $GITHUB_WORKSPACE/apps.txt);do make -j$(nproc) package/$line/compile || make -j1 package/$line/compile || make -j1 V=s package/$line/compile;done
+        for line in $(cat $GITHUB_WORKSPACE/$APP_LST);do make -j$(nproc) package/$line/compile || make -j1 package/$line/compile || make -j1 V=s package/$line/compile;done
         staging_dir/host/bin/usign -G -s key-build -p key-build.pub -c "Local Build Key"
         make -j$(nproc) package/index
         echo "::set-output name=status::success"
