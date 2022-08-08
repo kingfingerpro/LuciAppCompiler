@@ -129,6 +129,9 @@ jobs:
       if: steps.compress.outputs.status == 'success' && !cancelled()
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")-$DEVICE_NAME"
+        touch release.txt
+        echo "Extra Packages : " > release.txt
+        cat $GITHUB_WORKSPACE/$APP_LST >> release.txt
         echo "::set-output name=status::success"
 
     - name: Upload IPK to release
@@ -138,7 +141,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
-        body: "Have a nice day !"
+        body_path: release.txt
         files: ${{ env.IPK }}/${{ env.DEVICE_NAME }}.zip
 
     - name: Delete workflow runs
