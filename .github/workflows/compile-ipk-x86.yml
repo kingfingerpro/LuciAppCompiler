@@ -81,7 +81,7 @@ jobs:
     - name: Compile IPK
       id: compile
       run: |
-        echo "curl" >> $APP_LST
+        echo "luci-app-opkg" >> $APP_LST
         cd openwrt
         echo -e "$(nproc) thread compile"
         for line in $(cat $GITHUB_WORKSPACE/$APP_LST);do make -j$(nproc) package/$line/compile || make -j1 package/$line/compile || make -j1 V=s package/$line/compile;done
