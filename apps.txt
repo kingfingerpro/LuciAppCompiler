@@ -1,4 +1,5 @@
 luci-theme-argon
+luci-theme-edge
 luci-app-wolplus
 luci-app-vlmcsd
 luci-app-ssr-plus
